@@ -1,0 +1,5 @@
+- React Front-End
+- Connects to the Northwind SQL database 
+- Back-end API: ASP NET Core API
+- Create, Read, Update and Delete Operations
+- Uses Localstorage
