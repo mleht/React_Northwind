@@ -198,7 +198,10 @@ class NWCustomerFetch2 extends Component {
     }
     // Alla palautetaan vaihtoehtoinen näkymä riippunee visible.statesta (eli mitä nappia on painettu)
     if (this.state.visible === "table") {
-      if (localStorage.getItem("token") === null) {
+      if (
+        localStorage.getItem("token") === null ||
+        localStorage.getItem("logged") === null
+      ) {
         // jos ei olla sisäänkirjautuneena ohjataan kirjautumaan
         return <Redirect push to="/tili" />;
       }

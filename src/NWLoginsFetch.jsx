@@ -15,6 +15,7 @@ class NWLoginsFetch extends Component {
       renderChildAdd: true, // käytetään  kertomaan pitääkö formi renderöidä vaiko ei
       renderChildEdit: true, // sama kuin yllä
       renderChildDelete: true, // sama kuin yllä
+      LoggedInUser: "",
       oneUser: [], // oneUser niminen olio eli tyhjä taulukko edit toiminta varten
     };
     this.handleChildUnmountAdd = this.handleChildUnmountAdd.bind(this);
@@ -59,11 +60,15 @@ class NWLoginsFetch extends Component {
   };
 
   handleClickDelete = (poistettava, event) => {
-    this.setState({
-      oneUser: poistettava, // viedään constructorissa määritettyyn taulukkoon yksiAsiakas klikatun rivin asiakas joka on elementOlioEditButtonista parametrissa
-      visible: "deleteform", // ehdolliseen returniin deleteform, jonka render nyt renderöi
-      renderChildDelete: true,
-    });
+    if (this.state.LoggedInUser === poistettava.userName) {
+      alert("Et voi poistaa samaa tilia, jolla olet kirjautuneena.");
+    } else {
+      this.setState({
+        oneUser: poistettava, // viedään constructorissa määritettyyn taulukkoon yksiAsiakas klikatun rivin asiakas joka on elementOlioEditButtonista parametrissa
+        visible: "deleteform", // ehdolliseen returniin deleteform, jonka render nyt renderöi
+        renderChildDelete: true,
+      });
+    }
   };
 
   handleClickHelp = () => {
@@ -90,6 +95,8 @@ class NWLoginsFetch extends Component {
   }
 
   componentDidMount() {
+    const logged = localStorage.getItem("user");
+    this.setState({ ...this.state, LoggedInUser: logged });
     this.HaeNWRestApista();
   }
 
@@ -136,7 +143,10 @@ class NWLoginsFetch extends Component {
     }
     // Alla palautetaan vaihtoehtoinen näkymä riippune visible.statesta (eli mitä nappia on painettu)
     if (this.state.visible === "table") {
-      if (localStorage.getItem("token") === null) {
+      if (
+        localStorage.getItem("token") === null ||
+        localStorage.getItem("logged") === null
+      ) {
         // jos ei olla sisäänkirjautuneena ohjataan kirjautumaan
         return <Redirect push to="/tili" />;
       }

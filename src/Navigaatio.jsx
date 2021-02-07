@@ -1,21 +1,23 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route, Link, HashRouter } from "react-router-dom";
 import etusivu from "./etusivu";
 import Login from "./Login";
+import NotFoundPage from "./NotFoundPage";
 import NWCustomerFetch2 from "./NWCustomerFetch2";
 import NWLoginsFetch from "./NWLoginsFetch";
 import NWProductsFetch from "./NWProductsFetch";
 import TypicodeFetchV2 from "./TypicodeFetchV2";
 
+// inkkien pistteet muutoksena
 class Navigaatio extends Component {
   render() {
     return (
-      <Router>
+      <HashRouter basename="/somefolder">
         <div>
           <nav className="navbar navbar-expand-lg navbar-dark color-nav">
-            <a className="navbar-brand" href="/">
+            <Link to="/" className="navbar-brand">
               Northwind React Application 2021
-            </a>
+            </Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -31,25 +33,24 @@ class Navigaatio extends Component {
             <div className="collapse navbar-collapse" id="navbarColor02">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item active">
-                  <a className="nav-link" href="/">
+                  <Link to="/" className="nav-link">
                     Etusivu
-                    <span className="sr-only">(current)</span>
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item active">
-                  <a className="nav-link" href="/asiakkaat">
+                  <Link to="/asiakkaat" className="nav-link">
                     Asiakkaat
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item active">
-                  <a className="nav-link" href="/Logins">
+                  <Link to="/Logins" className="nav-link">
                     Käyttäjät
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item active">
-                  <a className="nav-link" href="/Products">
+                  <Link to="/Products" className="nav-link">
                     Tuotteet
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item dropdown active">
                   <a
@@ -63,17 +64,17 @@ class Navigaatio extends Component {
                     Typicode
                   </a>
                   <div className="dropdown-menu">
-                    <a className="dropdown-item" href="/TypicodeFetch">
-                      Typicode demo
-                    </a>
+                    <Link to="/TypicodeFetch" className="dropdown-item">
+                      TypicodeFetch demo
+                    </Link>
                   </div>
                 </li>
               </ul>
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item active">
-                  <a className="nav-link" href="/tili">
+                  <Link to="/tili" className="nav-link">
                     Käyttäjätilin hallinta
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -86,9 +87,10 @@ class Navigaatio extends Component {
             <Route path="/tili" component={Login} />
             <Route path="/Logins" component={NWLoginsFetch} />
             <Route path="/Products" component={NWProductsFetch} />
+            <Route path="*" component={NotFoundPage} />
           </Switch>
         </div>
-      </Router>
+      </HashRouter>
     );
   }
 }

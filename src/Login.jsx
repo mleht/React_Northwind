@@ -18,10 +18,11 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // componentDidMountissa tarkastetaan onko Token voimassa, jos on ei näytetä kirjautumisikkunaa ja loggedinuser "user" localstoragesta
+  // componentDidMountissa tarkastetaan onko Token voimassa (ja logged true), jos on ei näytetä kirjautumisikkunaa ja loggedinuser "user" localstoragesta
   componentDidMount() {
     const userFromLocalStorage = localStorage.getItem("user");
-    if (userFromLocalStorage) {
+    const kirjaut = localStorage.getItem("logged");
+    if (userFromLocalStorage && kirjaut) {
       this.setState({
         ...this.state,
         ShowLoginForm: false,
